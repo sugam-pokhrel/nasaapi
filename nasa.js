@@ -1,20 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NASA</title>
-</head>
-<body>
-    <input type="date">
-    <button>Search</button>
-    <h2></h2>
-    <img src="" alt="">
-    <p></p>
-    <iframe src="" frameborder="0"></iframe>
 
-    
-<script src="./nasa.js"></script>    
-</body>
-</html>
+document.querySelector('button').addEventListener('click',come); //this code is listening on button for any click
+
+
+
+function come(){
+ let info=   document.querySelector('input').value
+ console.log(info);   
+    fetch(`https://api.nasa.gov/planetary/apod?api_key=WR3Ow1dlwaQUri3JTHmyHbyUUtGh13avME2Cgwf6&date=${info}`) //all these are extracted from their api
+    .then(res=>res.json())
+    .then(data=>{console.log(data)
+        document.querySelector('h2').innerText=data.title;
+        document.querySelector('p').innerText=data.explanation;
+       
+
+        if(data.media_type=='image'){
+            document.querySelector('img').src=data.hdurl;
+
+        } 
+        else if(data.media_type=='video'){
+            document.querySelector('iframe').src=data.url;
+        }
+
+    })
+    .catch(err=>console.log(err));
+
+}
+
